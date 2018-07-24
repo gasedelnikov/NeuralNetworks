@@ -1,10 +1,12 @@
 package neuralnetworks.Data;
 
+import neuralnetworks.NNObjectInterface;
+
 /**
  *
  * @author g_sedelnikov
  */
-public class Letter {
+public class Letter implements NNObjectInterface{
     private int index;
     private String code;
     private String name;
@@ -34,6 +36,7 @@ public class Letter {
         return name;
     }
 
+    @Override
     public String getCode() {
         return code;
     }
@@ -42,6 +45,7 @@ public class Letter {
         this.code = code;
     }
 
+    @Override
     public String getName() {
         return name;
     }
@@ -50,6 +54,7 @@ public class Letter {
         this.name = name;
     }
 
+    @Override
     public double[] getData() {
         return data;
     }
@@ -58,6 +63,7 @@ public class Letter {
         this.data = data;
     }
 
+    @Override
     public int getIndex() {
         return index;
     }
@@ -66,6 +72,7 @@ public class Letter {
         this.index = index;
     }
 
+    @Override
     public double[] getCorrectData() {
         return correctData;
     }
@@ -74,6 +81,7 @@ public class Letter {
         this.correctData = correctData;
     }
 
+    @Override
     public void breakData(int invertPixelCount){
         int realInvertPixel = 0;
         if (invertPixelCount >= data.length){
@@ -98,8 +106,6 @@ public class Letter {
                     data[i] = 0.0d;
                 }   
             }  
-//            System.out.println(" data =" + (int)data[i] + " " + (int)correctData[i] + " " + i);
         }
     }      
-    
 }

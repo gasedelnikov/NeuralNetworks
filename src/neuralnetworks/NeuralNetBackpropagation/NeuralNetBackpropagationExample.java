@@ -1,7 +1,7 @@
 package neuralnetworks.NeuralNetBackpropagation;
 
 import neuralnetworks.Data.LettersArray;
-import neuralnetworks.Data.Letter;
+import neuralnetworks.NNObjectInterface;
 import neuralnetworks.NeuralNetworksInterface;
 import neuralnetworks.utils.Functions;
 
@@ -57,7 +57,7 @@ public class NeuralNetBackpropagationExample {
      */
     public static void startLettersExample(){
         int outputCount                 = 29;
-        Letter[] letters                = LettersArray.getLettersAndBrokenLetters(outputCount);
+        NNObjectInterface[] letters     = LettersArray.getLettersAndBrokenLetters(outputCount);
         int inputCount                  = letters[0].getData().length;
         int hiddenCount                 = 30;
         double startWeightsRandomCoef   = 0.1;
@@ -68,7 +68,7 @@ public class NeuralNetBackpropagationExample {
         
         for (int i=0; i< iterationCount; i++){
             Functions.mixUpArray(letters, mixingCount);
-            for (Letter letter : letters) {
+            for (NNObjectInterface letter : letters) {
                 double[] expectedData = new double[outputCount];
                 expectedData[letter.getIndex()] = 1.0d; 
                 
@@ -88,7 +88,7 @@ public class NeuralNetBackpropagationExample {
         
 //************************        
         int invertPixelCount = 5;
-        for (Letter letter: letters){
+        for (NNObjectInterface letter: letters){
             letter.breakData(invertPixelCount);
         }        
         check(nnb, letters, "Broken letters test; invertPixel = " + String.format("%.2f", 100.0d*invertPixelCount/letters.length)+"%");            
@@ -97,7 +97,7 @@ public class NeuralNetBackpropagationExample {
         invertPixelCount = 10;
         letters = LettersArray.getLetters(outputCount);
         Functions.mixUpArray(letters, mixingCount);          
-        for (Letter letter: letters){
+        for (NNObjectInterface letter: letters){
             letter.breakData(invertPixelCount);
         }        
         check(nnb, letters, "Broken letters test; invertPixel = " + String.format("%.2f", 100.0d*invertPixelCount/letters.length)+"%");           
@@ -105,7 +105,7 @@ public class NeuralNetBackpropagationExample {
      
 }    
     
-    public static void printLetter(int indexSep, Letter letter){
+    public static void printLetter(int indexSep, NNObjectInterface letter){
         for (int i=0; i < letter.getData().length; i++){
             if ((i!=0) && (i / indexSep) == (1d * i / indexSep)){
                 System.out.println("|");
@@ -117,7 +117,7 @@ public class NeuralNetBackpropagationExample {
         System.out.println();        
     }      
     
-    public static void check(NeuralNetworksInterface nnb, Letter[] letters, String testName){    
+    public static void check(NeuralNetworksInterface nnb, NNObjectInterface[] letters, String testName){    
         int outputCount = letters.length;        
         int cntSucsses = 0;
         int cntErr = 0;        
@@ -127,7 +127,7 @@ public class NeuralNetBackpropagationExample {
         int cntSucssesMax = 0;
         int cntErrMax = 0;          
         for (int i=0; i < outputCount; i++){  
-            Letter letter = letters[i]; 
+            NNObjectInterface letter = letters[i]; 
             double[] result = nnb.getPrediction(letter.getData());
             double maxValue = Double.NEGATIVE_INFINITY;
             int curIndex = 0;            
@@ -170,7 +170,7 @@ public class NeuralNetBackpropagationExample {
         System.out.println();
     }     
     
-    public static void printResult(NeuralNetworksInterface nnb, Letter[] letters){
+    public static void printResult(NeuralNetworksInterface nnb, NNObjectInterface[] letters){
         int outputCount = letters.length;
         for (int i=0; i < outputCount; i++){
             double[] result = nnb.getPrediction(letters[i].getData());  
